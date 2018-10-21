@@ -39,7 +39,7 @@ func TestBoggleGenerator(t *testing.T) {
 
 	assertLetter(t, letter)
 
-	board := generateBoard()
+	board := GenerateBoard()
 	boardValue := reflect.ValueOf(board)
 	if boardValue.Kind() != reflect.Slice {
 		t.Error("Failed to generate board array")

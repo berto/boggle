@@ -22,6 +22,19 @@ func FindWord(board [][]byte, word string) bool {
 	return search(wordMap, []byte(word))
 }
 
+// GenerateBoard creates a new boggle board
+func GenerateBoard() [][]byte {
+	board := make([][]byte, boardSize)
+	for i, row := range board {
+		row = make([]byte, boardSize)
+		for j := range row {
+			row[j] = generateLetter()
+		}
+		board[i] = row
+	}
+	return board
+}
+
 func gradeBoard(board [][]byte, words []string) int {
 	score := 0
 	for _, word := range words {
@@ -51,18 +64,6 @@ func generateLetter() byte {
 	rand.Seed(time.Now().UnixNano())
 	randomIndex := rand.Intn(len(alphabet))
 	return alphabet[randomIndex]
-}
-
-func generateBoard() [][]byte {
-	board := make([][]byte, boardSize)
-	for i, row := range board {
-		row = make([]byte, boardSize)
-		for j := range row {
-			row[j] = generateLetter()
-		}
-		board[i] = row
-	}
-	return board
 }
 
 func convertBoard(board [][]byte) []*node {
