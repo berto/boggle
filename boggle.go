@@ -16,6 +16,31 @@ type node struct {
 	checked   bool
 }
 
+func gradeBoard(board [][]byte, words []string) int {
+	score := 0
+	for _, word := range words {
+		if findWord(board, word) {
+			score += scoreWord(word)
+		}
+	}
+	return score
+}
+
+func scoreWord(word string) int {
+	if len(word) < 3 {
+		return 0
+	} else if len(word) < 5 {
+		return 1
+	} else if len(word) == 5 {
+		return 2
+	} else if len(word) == 6 {
+		return 3
+	} else if len(word) == 7 {
+		return 5
+	}
+	return 11
+}
+
 func generateLetter() byte {
 	rand.Seed(time.Now().UnixNano())
 	randomIndex := rand.Intn(len(alphabet))
@@ -109,7 +134,9 @@ func search(nodes []*node, word []byte) bool {
 	for i := range nodes {
 		if nodes[i].value == word[0] && !nodes[i].checked {
 			nodes[i].checked = true
-			return search(nodes[i].neighbors, word[1:])
+			if search(nodes[i].neighbors, word[1:]) {
+				return true
+			}
 		}
 	}
 	return false
