@@ -35,7 +35,8 @@ func GenerateBoard() [][]byte {
 	return board
 }
 
-func gradeBoard(board [][]byte, words []string) int {
+// GradeBoard finds matching words and returns a score
+func GradeBoard(board [][]byte, words []string) int {
 	score := 0
 	for _, word := range words {
 		if FindWord(board, word) {

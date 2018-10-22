@@ -1,7 +1,6 @@
 package dictionary
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/berto/boggle/boggle"
@@ -25,9 +24,9 @@ func TestFindPossibleWords(t *testing.T) {
 	}
 
 	words, err := FindDictionaryWords(finder, dictionaryPath)
-	expected := []string{"bears", "beats"}
-	fmt.Printf("%v", words)
-	if err != nil && !testEqualWords(words, expected) {
+	expected := []string{"bear", "beats"}
+
+	if err != nil || !testEqualWords(words, expected) {
 		t.Errorf("Failed to find words from dictionary: expected %v to be %v", words, expected)
 	}
 }

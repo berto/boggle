@@ -6,6 +6,6 @@ func BenchmarkGradeBoard(b *testing.B) {
 	testWords := []string{"testing", "is", "awesome"}
 	for n := 0; n < b.N; n++ {
 		board := GenerateBoard()
-		gradeBoard(board, testWords)
+		GradeBoard(board, testWords)
 	}
 }

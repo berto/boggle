@@ -26,7 +26,7 @@ func TestBoggleGrader(t *testing.T) {
 		{'q', 'v', 'x', 'm'},
 	}
 
-	got := gradeBoard(sampleBoard, words)
+	got := GradeBoard(sampleBoard, words)
 	want := 0 + 2 + 0 + 1 + 1 + 0 + 0 + 1
 
 	if got != want {

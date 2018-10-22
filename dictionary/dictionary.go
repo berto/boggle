@@ -20,7 +20,7 @@ func FindDictionaryWords(finder func(word string) bool, dictionaryPath string) (
 	words := []string{}
 	for scanner.Scan() {
 		word := scanner.Text()
-		if finder(word) {
+		if len(word) > 2 && finder(word) {
 			words = append(words, word)
 		}
 	}
