@@ -1,0 +1,30 @@
+version: 2
+jobs:
+  build_and_test:
+    working_directory: /go/src/github.com/berto/boggle
+    docker:
+    - image: circleci/golang:1.11
+    steps:
+    - checkout
+    - run:
+      name: test
+      command: |
+        go build -v
+        go test -p 6 -race ./...
+  deploy:
+    docker:
+      - image: circleci/golang:1.11
+    steps:
+      - checkout
+      - run:
+          name: Deploy Master to Heroku
+          command: |
+            git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$APP_NAME.git master
+workflows:
+  version: 2
+  build_and_test_and_deploy:
+    jobs:
+    - build_and_test
+    - deploy:
+        requires:
+          - build_and_test
