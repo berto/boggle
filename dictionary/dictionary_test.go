@@ -24,7 +24,7 @@ func TestFindPossibleWords(t *testing.T) {
 	}
 
 	words, err := FindDictionaryWords(finder, dictionaryPath)
-	expected := []string{"bear", "beats"}
+	expected := []string{"bear", "beats", "team"}
 
 	if err != nil || !testEqualWords(words, expected) {
 		t.Errorf("Failed to find words from dictionary: expected %v to be %v", words, expected)

@@ -35,7 +35,7 @@ func main() {
 	time.Sleep(gameTime * time.Second)
 
 	fmt.Println(endMessage)
-	fmt.Println(game.PrintScore(board, words))
+	fmt.Println(game.PrintScore(board, words, dictionaryPath))
 
 	wordsMessage, err := game.PrintPossibleWords(board, dictionaryPath)
 	if err != nil {

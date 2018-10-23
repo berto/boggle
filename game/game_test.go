@@ -31,9 +31,12 @@ func TestPrintScore(t *testing.T) {
 		{'o', 'b', 'e', 'r'},
 		{'q', 'v', 'x', 'm'},
 	}
-	words := []string{"lover", "apple"}
-	if PrintScore(sampleBoard, words) != "Score: 2" {
-		t.Error("Failed to print score")
+	words := []string{"lover", "apple", "team"}
+	path := "../dictionary/data/words_test.txt"
+	printedScore := PrintScore(sampleBoard, words, path)
+	expected := "Score: 2"
+	if printedScore != expected {
+		t.Errorf("Failed to print score: %s should equal %s", printedScore, expected)
 	}
 }
 
@@ -44,7 +47,7 @@ func TestPrintPossibleWords(t *testing.T) {
 		{'o', 's', 'a', 'r'},
 		{'q', 'r', 'x', 'm'},
 	}
-	expect := "Possible words: bear beats"
+	expect := "Possible words: bear beats team"
 	dictionaryPath := "../dictionary/data/words_test.txt"
 	words, err := PrintPossibleWords(sampleBoard, dictionaryPath)
 

@@ -23,8 +23,18 @@ func PrintBoard(board [][]byte) (boardString string) {
 }
 
 // PrintScore displays the score result
-func PrintScore(board [][]byte, words []string) string {
-	score := boggle.GradeBoard(board, words)
+func PrintScore(board [][]byte, words []string, path string) string {
+	newWords := []string{}
+	for _, word := range words {
+		finder := func(dictionaryWord string) bool {
+			return dictionaryWord == strings.ToLower(word)
+		}
+		words, err := dictionary.FindDictionaryWords(finder, path)
+		if err == nil && len(words) >= 1 {
+			newWords = append(newWords, word)
+		}
+	}
+	score := boggle.GradeBoard(board, newWords)
 	return "Score: " + strconv.Itoa(score)
 }
 
