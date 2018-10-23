@@ -1,49 +1,45 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"log"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
-	"github.com/berto/boggle/boggle"
-	"github.com/berto/boggle/game"
+	"github.com/berto/boggle/dictionary"
+	"github.com/gin-gonic/gin"
 )
 
-const (
-	startMessage   = "Find as many words as you can:"
-	endMessage     = "Time's up!"
-	gameTime       = 60 // in seconds
-	dictionaryPath = "./dictionary/data/words.txt"
-)
+const dictionaryPath = "./dictionary/data/words.txt"
+const delay = 2 // in seconds
 
 func main() {
-	scanner := bufio.NewScanner(os.Stdin)
-	words := []string{}
-	board := boggle.GenerateBoard()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3000"
+	}
+	r := gin.Default()
+	r.GET("/dictionary", findRoute)
+	r.GET("/delaytionary", func(c *gin.Context) {
+		time.Sleep(delay * time.Second)
+		findRoute(c)
+	})
+	r.Run(":" + port)
+}
 
-	fmt.Println(game.PrintBoard(board))
-	fmt.Println(startMessage)
-
-	go func() {
-		for scanner.Scan() {
-			words = append(words, scanner.Text())
+func findRoute(c *gin.Context) {
+	word := c.Query("word")
+	var v bool
+	if word != "" {
+		finder := func(dictionaryWord string) bool {
+			return dictionaryWord == strings.ToLower(word)
 		}
-	}()
-	time.Sleep(gameTime * time.Second)
-
-	fmt.Println(endMessage)
-	fmt.Println(game.PrintScore(board, words))
-
-	wordsMessage, err := game.PrintPossibleWords(board, dictionaryPath)
-	if err != nil {
-		fmt.Println("Error finding dictionary words")
-	} else {
-		fmt.Println(wordsMessage)
+		words, err := dictionary.FindDictionaryWords(finder, dictionaryPath)
+		if err == nil && len(words) >= 1 {
+			v = true
+		}
 	}
-
-	if scanner.Err() != nil {
-		log.Fatal("Error scanning standard input")
-	}
+	c.JSON(200, gin.H{
+		"wordFound": strconv.FormatBool(v),
+	})
 }

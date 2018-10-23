@@ -3,6 +3,7 @@ package dictionary
 import (
 	"bufio"
 	"os"
+	"strings"
 
 	"github.com/pkg/errors"
 )
@@ -19,8 +20,8 @@ func FindDictionaryWords(finder func(word string) bool, dictionaryPath string) (
 	scanner := bufio.NewScanner(file)
 	words := []string{}
 	for scanner.Scan() {
-		word := scanner.Text()
-		if len(word) > 2 && finder(word) {
+		word := strings.ToLower(scanner.Text())
+		if finder(word) {
 			words = append(words, word)
 		}
 	}

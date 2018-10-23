@@ -18,6 +18,9 @@ type node struct {
 
 // FindWord searches a word in a boggle board
 func FindWord(board [][]byte, word string) bool {
+	if len(word) < 3 {
+		return false
+	}
 	wordMap := convertBoard(board)
 	return search(wordMap, []byte(word))
 }
