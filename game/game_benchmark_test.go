@@ -1,4 +1,4 @@
-package boggle
+package game
 
 import "testing"
 

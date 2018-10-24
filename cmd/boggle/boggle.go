@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/berto/boggle/boggle"
 	"github.com/berto/boggle/game"
+	"github.com/berto/boggle/print"
 )
 
 const (
@@ -22,9 +22,9 @@ const (
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	words := []string{}
-	board := boggle.GenerateBoard()
+	board := game.GenerateBoard()
 
-	fmt.Println(game.PrintBoard(board))
+	fmt.Println(print.Board(board))
 	fmt.Println(startMessage)
 
 	go func() {
@@ -35,9 +35,9 @@ func main() {
 	time.Sleep(gameTime * time.Second)
 
 	fmt.Println(endMessage)
-	fmt.Println(game.PrintScore(board, words, dictionaryPath))
+	fmt.Println(print.Score(board, words, dictionaryPath))
 
-	wordsMessage, err := game.PrintPossibleWords(board, dictionaryPath)
+	wordsMessage, err := print.PossibleWords(board, dictionaryPath)
 	if err != nil {
 		fmt.Println("Error finding dictionary words")
 	} else {
