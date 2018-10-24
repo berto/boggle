@@ -4,6 +4,6 @@
 
 ```
 go get -d github.com/berto/boggle
-cd $GOPATH/github.com/berto/boggle/cmd/boggle/main.go
+cd $GOPATH/github.com/berto/boggle/cmd/boggle
 go run main.go
 ```
