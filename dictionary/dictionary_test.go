@@ -3,7 +3,7 @@ package dictionary
 import (
 	"testing"
 
-	"github.com/berto/boggle/boggle"
+	"github.com/berto/boggle/game"
 )
 
 func TestFindPossibleWords(t *testing.T) {
@@ -16,7 +16,7 @@ func TestFindPossibleWords(t *testing.T) {
 	dictionaryPath := "./data/words_test.txt"
 	fakeDictionaryPath := "./words_test.txt"
 	finder := func(word string) bool {
-		return boggle.FindWord(sampleBoard, word)
+		return game.FindWord(sampleBoard, word)
 	}
 	_, err := FindDictionaryWords(finder, fakeDictionaryPath)
 	if err == nil {
